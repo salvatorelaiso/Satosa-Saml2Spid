@@ -123,7 +123,7 @@ services:
     container_name: satosa-nginx
     depends_on:
       satosa-saml2spid:
-        condition: service_completed_successfully
+        condition: service_healthy
     ports:
       - "80:80"
       - "443:443"
