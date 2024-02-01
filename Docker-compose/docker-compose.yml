@@ -122,8 +122,7 @@ services:
     image: nginx:alpine
     container_name: satosa-nginx
     depends_on:
-      satosa-saml2spid:
-        condition: service_healthy
+      - satosa-saml2spid
     ports:
       - "80:80"
       - "443:443"

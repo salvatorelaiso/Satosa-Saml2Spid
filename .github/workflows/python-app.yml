@@ -47,6 +47,13 @@ jobs:
         cd Docker-compose
         ./run-docker-compose.sh
         docker ps -a
+    - name: healthcheck
+      run: |
+        while [ "$status" != "0" ]; do
+          sleep 5
+          wget --no-cache https://localhost/Saml2IDP/metadata --no-check-certificate -O - | grep EntityDescriptor 
+          status=$(echo $?)
+        done;
     - name: djangosaml2 SP metadata to Proxy
       run: |
         wget http://localhost:8000/saml2/metadata -O example/metadata/sp/djangosaml2_sp.xml
