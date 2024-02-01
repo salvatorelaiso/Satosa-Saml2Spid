@@ -122,7 +122,8 @@ services:
     image: nginx:alpine
     container_name: satosa-nginx
     depends_on:
-      - satosa-saml2spid
+      satosa-saml2spid:
+        condition: service_completed_successfully
     ports:
       - "80:80"
       - "443:443"
@@ -135,12 +136,6 @@ services:
       - ../docker-example/static:/var/www/html
     networks:
       - satosa-saml2spid
-    healthcheck:
-      test: curl --fail https://localhost/SAML2IDP/metadata || exit 1
-      interval: 2s
-      retries: 10
-      start_period: 10s
-      timeout: 10s
 
   spid-samlcheck:
     image: italia/spid-saml-check
